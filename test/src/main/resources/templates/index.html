@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Nhan Vien List</title>
+    <th:block th:replace="layout :: link-css"></th:block>
+</head>
+<body>
+<th:block th:replace="layout :: header"></th:block>
+<div class="container">
+    <h1 th:text=${title}></h1>
+    <table class="table">
+        <tr>
+            <th>Ma_NV</th>
+            <th>Ten_NV</th>
+            <th>GioiTinh</th>
+            <th>Noi_Sinh</th>
+            <th>Ten_Phong</th>
+            <th>Luong</th>
+            <th>Action</th>
+        </tr>
+        <tr th:each="nhanvien : ${listNhanVien}">
+            <td th:text="${nhanvien.Ma_NV}"></td>
+            <td th:text="${nhanvien.Ten_NV}"></td>
+            <td>
+                <img th:if="${nhanvien.Phai == 'Nam'}" th:src="@{/images/man.png}" style="width: 100px; height: 100px"/>
+                <img th:if="${nhanvien.Phai == 'Nữ'}" th:src="@{/images/woman.png}" style="width: 100px; height: 100px"/>
+            </td>
+            <td th:text="${nhanvien.Noi_Sinh}"></td>
+            <td th:text="${nhanvien.phongBan.Ten_Phong}"></td>
+            <td th:text="${nhanvien.Luong}"></td>
+            <td>
+                <a th:href="@{/nhanvien/edit/{id}(id=${nhanvien.Ma_NV})}">Edit</a>
+                <form th:action="@{/nhanvien/delete/{id}(id=${nhanvien.Ma_NV})}" method="post" onsubmit="return confirm('Are you sure?')">
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<th:block th:replace="layout :: footer"></th:block>
+</body>
+</html>
